@@ -10,9 +10,15 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = [
+        'restaurant_id',
         'reviewer_id',
         'rating',
         'title',
         'body',
     ];
+
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
+    }
 }
