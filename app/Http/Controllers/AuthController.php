@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        // Validate the incoming request data using the Validator facade.
+        // Validate incoming data
         $validator = Validator::make($request->all(), [
             'email'    => 'required|string|email',
             'password' => 'required|string'
@@ -28,26 +28,22 @@ class AuthController extends Controller
             ], 422);
         }
 
-        $data = $validator->validated();
+        // Attempt to authenticate user
+        $user = User::where('email', $request->email)->first();
 
-        // Retrieve the user by the provided email.
-        $user = User::where('email', $data['email'])->first();
-
-        // Check if user exists and if the password is correct.
-        if (!$user || !Hash::check($data['password'], $user->password)) {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'status' => 'error',
                 'error'  => [
                     'code'    => 401,
-                    'message' => 'Incorrect username or password'
+                    'message' => 'Invalid credentials'
                 ]
             ], 401);
         }
 
-        // Create a token for the user (using Laravel Sanctum).
-        $token = $user->createToken('apiToken')->plainTextToken;
+        // Issue a token for the user
+        $token = $user->createToken('auth_token')->plainTextToken;
 
-        // Return the user and the token.
         return response()->json([
             'user'  => $user,
             'token' => $token
@@ -56,12 +52,11 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // Validate the incoming request data.
+        // Validate incoming data
         $validator = Validator::make($request->all(), [
             'name'     => 'required|string|max:255',
             'email'    => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'password_confirmation' => 'required|same:password'
+            'password' => 'required|string|min:8|confirmed'
         ]);
 
         if ($validator->fails()) {
@@ -75,17 +70,16 @@ class AuthController extends Controller
             ], 422);
         }
 
-        // Create the new user with a hashed password.
+        // Create user
         $user = User::create([
-            'name'     => $request->input('name'),
-            'email'    => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
         ]);
 
-        // Optional: Issue an API token using Laravel Sanctum.
-        $token = $user->createToken('apiToken')->plainTextToken;
+        // Issue a token for the user
+        $token = $user->createToken('auth_token')->plainTextToken;
 
-        // Return the newly created user along with the token.
         return response()->json([
             'user'  => $user,
             'token' => $token
