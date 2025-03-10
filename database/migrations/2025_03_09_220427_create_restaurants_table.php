@@ -11,8 +11,6 @@ return new class extends Migration {
             // Manually entered restaurant id (no auto-increment)
             $table->integer('id')->primary();
             $table->string('name');
-            // Average rating stored as a decimal (default 0)
-            $table->decimal('average_rating', 3, 2)->default(0);
             $table->timestamps();
         });
     }

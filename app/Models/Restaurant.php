@@ -17,7 +17,6 @@ class Restaurant extends Model
     protected $fillable = [
         'id', // manual input for restaurant id
         'name',
-        'average_rating',
     ];
 
     public function reviews(): HasMany

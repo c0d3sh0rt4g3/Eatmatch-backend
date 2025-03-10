@@ -51,8 +51,6 @@ class RestaurantController extends Controller
         }
 
         $data = $validator->validated();
-        // Initialize average rating at 0 when the restaurant is created.
-        $data['average_rating'] = 0;
         $restaurant = Restaurant::create($data);
         return response()->json($restaurant, 201);
     }
@@ -105,25 +103,5 @@ class RestaurantController extends Controller
         }
         $restaurant->delete();
         return response()->json(null, 204);
-    }
-
-    // Optional: Update average rating using the associated reviews.
-    // This endpoint could be called after adding or updating a review.
-    public function updateAverageRating($id)
-    {
-        $restaurant = Restaurant::with('reviews')->find($id);
-        if (!$restaurant) {
-            return response()->json([
-                'status' => 'error',
-                'error'  => [
-                    'code'    => 404,
-                    'message' => 'Restaurant not found'
-                ]
-            ], 404);
-        }
-        $average = $restaurant->reviews->avg('rating');
-        $restaurant->average_rating = $average ?: 0;
-        $restaurant->save();
-        return response()->json($restaurant, 200);
     }
 }

@@ -14,7 +14,7 @@ class ReviewSeeder extends Seeder
         $reviews = [
             [
                 'reviewer_id'   => 1,
-                'restaurant_id' => 1, // Associates review with restaurant id 1
+                'restaurant_id' => 1,
                 'rating'        => 5,
                 'title'         => 'Outstanding Experience',
                 'body'          => 'The product exceeded my expectations!',
@@ -28,7 +28,7 @@ class ReviewSeeder extends Seeder
             ],
             [
                 'reviewer_id'   => 1,
-                'restaurant_id' => 1,
+                'restaurant_id' => 2,
                 'rating'        => 3,
                 'title'         => 'It was okay',
                 'body'          => 'The performance was average with a few bumps along the way.',
@@ -39,11 +39,5 @@ class ReviewSeeder extends Seeder
             Review::create($review);
         }
 
-        // Optionally recalculate and update the restaurant's average rating after seeding reviews.
-        $restaurant = Restaurant::find(1);
-        if ($restaurant) {
-            $restaurant->average_rating = (float) $restaurant->reviews()->avg('rating');
-            $restaurant->save();
-        }
     }
 }

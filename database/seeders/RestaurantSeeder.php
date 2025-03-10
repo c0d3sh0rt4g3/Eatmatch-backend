@@ -13,18 +13,15 @@ class RestaurantSeeder extends Seeder
         $restaurants = [
             [
                 'id'             => 1,
-                'name'           => 'The Culinary Spot',
-                'average_rating' => 0, // Initial value; can be updated based on reviews
+                'name'           => 'The Culinary Spot'
             ],
             [
                 'id'             => 2,
-                'name'           => 'Food Haven',
-                'average_rating' => 0,
+                'name'           => 'Food Haven'
             ],
             [
                 'id'             => 3,
-                'name'           => 'Gourmet Delight',
-                'average_rating' => 0,
+                'name'           => 'Gourmet Delight'
             ],
         ];
 
