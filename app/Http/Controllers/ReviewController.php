@@ -32,7 +32,7 @@ class ReviewController extends Controller
         return response()->json($review, 200);
     }
 
-    // Create a new review and update the restaurant average rating
+    // Create a new review
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -57,15 +57,10 @@ class ReviewController extends Controller
         $data = $validator->validated();
         $review = Review::create($data);
 
-        // Recalculate and update the restaurant's average rating
-        $restaurant = Restaurant::find($data['restaurant_id']);
-        $restaurant->average_rating = (float) $restaurant->reviews()->avg('rating');
-        $restaurant->save();
-
         return response()->json($review, 201);
     }
 
-    // Update an existing review and update the restaurant's average rating
+    // Update an existing review
     public function update(Request $request, $id)
     {
         $review = Review::find($id);
@@ -98,15 +93,10 @@ class ReviewController extends Controller
 
         $review->update($validator->validated());
 
-        // Recalculate average rating for the restaurant.
-        $restaurant = Restaurant::find($review->restaurant_id);
-        $restaurant->average_rating = (float) $restaurant->reviews()->avg('rating');
-        $restaurant->save();
-
         return response()->json($review, 200);
     }
 
-    // Delete a review and update the restaurant's average rating
+    // Delete a review
     public function destroy($id)
     {
         $review = Review::find($id);
@@ -120,14 +110,7 @@ class ReviewController extends Controller
             ], 404);
         }
 
-        // Capture restaurant id before deleting the review.
-        $restaurantId = $review->restaurant_id;
         $review->delete();
-
-        // Update the average rating for the restaurant after deletion.
-        $restaurant = Restaurant::find($restaurantId);
-        $restaurant->average_rating = (float) $restaurant->reviews()->avg('rating');
-        $restaurant->save();
 
         return response()->json(null, 204);
     }
