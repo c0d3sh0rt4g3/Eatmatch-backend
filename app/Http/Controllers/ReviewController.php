@@ -32,6 +32,33 @@ class ReviewController extends Controller
         return response()->json($review, 200);
     }
 
+    // Get reviews by reviewer ID
+    public function getReviewsByReviewer($reviewerId)
+    {
+        // Validate that the reviewer exists
+        $validator = Validator::make(['reviewer_id' => $reviewerId], [
+            'reviewer_id' => 'required|exists:users,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'error'  => [
+                    'code'    => 422,
+                    'message' => 'Invalid reviewer ID',
+                    'details' => $validator->errors()
+                ]
+            ], 422);
+        }
+
+        // Get all reviews by the reviewer with related restaurant data
+        $reviews = Review::with('restaurant')
+            ->where('reviewer_id', $reviewerId)
+            ->get();
+
+        return response()->json($reviews, 200);
+    }
+
     // Create a new review
     public function store(Request $request)
     {
