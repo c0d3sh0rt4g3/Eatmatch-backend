@@ -12,7 +12,7 @@ class Restaurant extends Model
 
     // Since the id is manually set, disable auto-increment.
     public $incrementing = false;
-    protected $keyType = 'integer';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'id', // manual input for restaurant id

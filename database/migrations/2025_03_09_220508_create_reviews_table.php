@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             // Link review to a restaurant; note that restaurant id is manually entered so we use integer instead of unsignedBigInteger.
-            $table->integer('restaurant_id');
+            $table->string('restaurant_id');
             $table->foreign('restaurant_id')
                 ->references('id')->on('restaurants')
                 ->onDelete('cascade');

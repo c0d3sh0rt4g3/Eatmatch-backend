@@ -1,38 +1,45 @@
-# Use an official PHP runtime as a parent image
-FROM php:8.2-fpm
+FROM php:8.1-fpm
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
+    build-essential \
     libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    libzip-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    locales \
+    zip \
+    jpegoptim optipng pngquant gifsicle \
+    vim \
+    unzip \
     git \
     curl \
-    zip \
-    unzip \
-    supervisor
+    libzip-dev
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Create the directory for Composer
-RUN mkdir -p /usr/local/bin
+# Install extensions
+RUN docker-php-ext-install pdo_mysql zip exif pcntl
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
+RUN docker-php-ext-install gd
 
-# Install Composer using the official Docker image
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /usr/src
 
-# Copy the current directory contents into the container at /usr/src
-COPY ../../../.. .
+COPY . .
 
-# Update Composer dependencies
-RUN php /usr/local/bin/composer update --no-interaction --no-dev --prefer-dist
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader
 
-# Make port 9000 available to the world outside this container
+# Set permissions
+RUN chown -R www-data:www-data /usr/src/storage
+RUN chmod -R 755 /usr/src/storage
+
+# Expose port 9000
 EXPOSE 9000
 
-# Run command when the container launches
+# Start PHP-FPM server
 CMD ["php-fpm"]

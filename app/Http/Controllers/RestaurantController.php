@@ -35,7 +35,7 @@ class RestaurantController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id'   => 'required|integer|unique:restaurants,id',
+            'id'   => 'required|string|unique:restaurants,id',
             'name' => 'required|string'
         ]);
 

@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('restaurants', function (Blueprint $table) {
             // Manually entered restaurant id (no auto-increment)
-            $table->integer('id')->primary();
+            $table->string('id')->primary();
             $table->string('name');
             $table->timestamps();
         });
