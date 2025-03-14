@@ -27,6 +27,13 @@ class ReviewSeeder extends Seeder
                 'body'          => 'La terraza del ático ofrece unas vistas espectaculares. Los platos estaban buenos aunque un poco pequeños para el precio.',
             ],
             [
+                'reviewer_id'   => 2,
+                'restaurant_id' => '51ae547daa47a818c0598d2dd37080334240f00102f901c2f2821a0000000092030a43617361204d61797465', // Casa Mayte
+                'rating'        => 1,
+                'title'         => 'Mierdon astronomico',
+                'body'          => 'Sabe a mierda, prefiero comer mierda que volver',
+            ],
+            [
                 'reviewer_id'   => 3,
                 'restaurant_id' => '5145042f0c1ea718c059398652068e334240f00102f901dafdf4150000000092031646656e6720536875692053616e637469205065747269', // Feng Shui Sancti Petri
                 'rating'        => 3,
