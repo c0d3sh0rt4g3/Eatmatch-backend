@@ -9,7 +9,7 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        // Array of Spanish names
+        // Array of Spanish names (original + new ones)
         $users = [
             'Carlos',
             'María',
@@ -20,7 +20,27 @@ class UserSeeder extends Seeder
             'Jorge',
             'Sofía',
             'Miguel',
-            'Lucía'
+            'Lucía',
+            'Antonio',
+            'Javier',
+            'Fernando',
+            'Alejandro',
+            'Isabel',
+            'Elena',
+            'Pilar',
+            'Mayte',
+            'Pedro',
+            'Teresa',
+            'Pablo',
+            'Diego',
+            'Raquel',
+            'Alberto',
+            'Cristina',
+            'Raúl',
+            'Laura',
+            'Silvia',
+            'Manuel',
+            'Dolores'
         ];
 
         foreach ($users as $name) {
