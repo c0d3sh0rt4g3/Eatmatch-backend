@@ -46,8 +46,8 @@ return [
                 'annotations' => [
                     base_path('app'),
                     base_path('app/Http/Controllers'),
-                    base_path('app/Http/Models'),
-                    base_path('app/database/seeders')
+                    base_path('app/Models'),
+                    base_path('database/seeders')
                 ],
             ],
         ],
