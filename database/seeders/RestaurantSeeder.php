@@ -5,8 +5,25 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Restaurant;
 
+/**
+ * RestaurantSeeder
+ *
+ * Seeds the database with predefined restaurant records.
+ * Each restaurant has a unique Google Places-like ID and a name.
+ *
+ * @note This seeder uses the create() method which may create duplicate records
+ * if run multiple times. Consider using updateOrCreate() for production environments.
+ */
 class RestaurantSeeder extends Seeder
 {
+    /**
+     * Seed the restaurants table with predefined data.
+     *
+     * Creates 11 restaurant records with fixed IDs and names.
+     * These IDs appear to be Google Places IDs or similar unique identifiers.
+     *
+     * @return void
+     */
     public function run()
     {
         // Array of restaurants with place_ids as their ids

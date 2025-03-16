@@ -6,8 +6,29 @@ use Illuminate\Database\Seeder;
 use App\Models\Review;
 use App\Models\Restaurant;
 
+/**
+ * ReviewSeeder
+ *
+ * Seeds the database with predefined restaurant review data.
+ * Each review includes ratings, titles, and comments in Spanish
+ * for various restaurant entries.
+ *
+ * @note These reviews link to specific restaurant IDs which must exist
+ * in the database before running this seeder. Recommended to run after
+ * RestaurantSeeder.
+ */
 class ReviewSeeder extends Seeder
 {
+    /**
+     * Seed the reviews table with predefined data.
+     *
+     * Creates 16 review records with fixed content in Spanish,
+     * linking each to a reviewer user ID and restaurant ID.
+     * Some restaurants have multiple reviews to demonstrate
+     * the one-to-many relationship between restaurants and reviews.
+     *
+     * @return void
+     */
     public function run()
     {
         // Array of reviews with restaurant place_ids and Spanish-themed content
